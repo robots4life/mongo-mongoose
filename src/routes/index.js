@@ -11,7 +11,7 @@ async function run() {
 
 		await client.connect();
 
-		console.log(client);
+		// console.log(client);
 
 		const conn = mongoose.createConnection().setClient(client);
 		// MongooseError: Must call `setClient()` with an instance of MongoClient
@@ -24,6 +24,8 @@ async function run() {
 
 		conn.getClient(); // MongoClient { ... }
 		conn.readyState; // 1, means 'CONNECTED'
+
+		// console.log(conn.readyState);
 	} catch (error) {
 		console.log(error);
 	}
@@ -37,7 +39,7 @@ export async function get() {
 		// Create a new MongoClient
 		const client = new MongoClient(uri);
 
-		console.log(client);
+		// console.log(client);
 
 		await client.connect();
 
@@ -53,10 +55,12 @@ export async function get() {
 		conn.getClient(); // MongoClient { ... }
 		conn.readyState; // 1, means 'CONNECTED'
 
+		console.log('conn.readyState : ' + conn.readyState);
+
 		return {
 			status: 200,
 			body: {
-				message: 'ok'
+				message: conn.readyState
 			}
 		};
 	} catch (error) {
